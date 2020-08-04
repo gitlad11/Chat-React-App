@@ -1,0 +1,95 @@
+.DialogsMenu{
+	margin-top: 50px !important;
+	position: relative;
+	height: 600px;
+	width: 60%;
+	margin: auto;
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+	border: 2px ease grey;
+}
+.Dialog-Window{
+	position: relative;
+	height: 100%;
+	width: 100%;
+	display: flex;
+
+}
+.DialogsList{
+	background-color: #afaeb0af;
+	left: 0;
+	height: 550px;
+	width: 30%;
+	padding: 2px;
+	border: 2px ease darkgrey;
+}
+.Dialog-item{
+	border-radius: 3px;
+	margin-bottom: 1px;
+	background-color: white;
+	position: relative;
+	text-align: center;
+	display: flex;
+	border-bottom: 1px grey;
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+	height: 50px;
+	width: 100%;
+	text-overflow: hidden !important;
+}
+.Dialog-item b{
+	margin: auto;
+}
+.DialogBar{
+	border-bottom-right-radius: 4px;
+	border-bottom-left-radius: 4px;
+	border-bottom: 3px solid darkgrey;
+	background-color: #6d38ff;
+	top: 0;
+	height: 50px;
+	width: 100%;
+}
+.DialogBar img{
+	height: 100%;
+	width: 100%;
+	border-radius: 60%;
+}
+.Dialog-Avatar{
+	background-color: white;
+	margin-top: auto;
+	margin-bottom: auto;
+	margin-left: 2px;
+	height: 40px;
+	width: 40px;
+	border: 1px solid black;
+	border-radius: 60%;
+}
+.DialogBar-Avatar{
+	position: absolute;
+	height: 40px;
+	width: 40px;
+	right: 10px;
+	border-radius: 60%;
+	border: 1px solid darkgrey;
+	margin: auto;
+	margin-top: 3px;
+}
+@media (max-width: 1100px) and (max-height: 900px) {
+  .DialogsMenu{
+  	margin-left: 80px;
+  	display: block;
+  }
+  .DialogsList{
+  	width: 35%;
+
+  }
+}
+
+@media (max-width: 900px) and (max-height: 900px) {
+  .DialogsMenu{
+  	margin-left: auto;
+  	width: 100%;
+  }
+  .DialogsList{
+  	width: 35%;
+
+  }
+}

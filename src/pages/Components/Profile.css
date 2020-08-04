@@ -1,0 +1,81 @@
+.Profile{
+	margin-top: 50px !important;
+	background-color: white;
+	position: relative;
+	height: 300px;
+	width: 60%;
+	margin: auto;
+	box-shadow: 0 0 10px rgba(0,0,0,0.8);
+	border: 1px solid grey;
+}
+.Profile-Image{
+	height: 120px;
+	width: 120px;
+	border: 1px solid grey;
+	margin-left: 30px;
+	margin-top: 30px;
+
+	box-shadow: 0 0 10px rgba(0,0,0,0.8);
+}
+.Profile-Image img{
+	height: 120px;
+	width: 120px;
+}
+.Profile-Name{
+	display: block;
+	margin-top: 30px;
+	margin-right: 30px;
+	margin-left: 30px;
+}
+.update-button img{
+	height: 40px;
+	width: 40px;
+}
+.update-button{
+	margin-top: 6px;
+}
+.Profile-Update{
+	display: flex;
+	align-content: center;
+	align-items: center;
+}
+.Update-form{
+	display: none;
+}
+.Update-form-Active{
+	height: 200px;
+	width: 200px;
+	transition: 0.9s ease;
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+	right: 10%;
+	top: 10%;
+}
+.Update-form-Active input{
+	margin: 7px;
+	width: 250px;
+	height: 40px;
+	border-radius: 5px;
+	border: none;
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+.Update-form-Active input:hover{
+	transform: translate(3px,3px);
+	transition: 0.4s ease;
+}
+.close-button{
+	margin: auto;
+	margin-right: 0px;
+}
+.buttons{
+	display: flex;
+	padding: 4px;
+}
+@media (max-width: 800px) and (max-height: 900px){
+.Update-form-Active{
+	background-color: rgba(0, 20, 20, 0.7);
+	width: 100%;
+	right: 0;
+}
+}

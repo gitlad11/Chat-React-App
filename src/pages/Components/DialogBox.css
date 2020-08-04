@@ -1,0 +1,108 @@
+.Dialog-Box{
+	position: relative;
+	height: 550px;
+	width: 100%;
+	background-color: gray;
+}
+.Dialog{
+	height: 500px;
+	width: 100%;
+	background-color: lightgrey;
+	padding: 10px;
+	overflow-y: scroll;
+}
+.Dialog-Input{
+	display: flex;
+	align-content: center;
+}
+.Dialog-Input input{
+	margin: auto;
+	width: 80%;
+	border-radius: 4px;
+	border: 2px;
+}
+.Dialog-Input button{
+	margin:auto;
+}
+.messages {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.message {
+  border-radius: 8px;
+  padding: 8px 15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: inline-block;
+  word-break: break-all;
+}
+.isme{
+  align-items: flex-end;
+}
+
+.isme .message {
+  color: white;
+  margin-left: 25%;
+  background: linear-gradient(to bottom, #00D0EA 0%, #0085D1 100%);
+  background-attachment: fixed;
+  position: relative;
+}
+
+.isme .message:before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  bottom: 0;
+  right: -8px;
+  height: 20px;
+  width: 20px;
+  background: linear-gradient(to bottom, #00D0EA 0%, #0085D1 100%);
+  background-attachment: fixed;
+  border-bottom-left-radius: 8px;
+}
+.isme .message:after{
+  content: "";
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  right: -10px;
+  width: 10px;
+  height: 20px;
+  background-color: lightgrey;
+  border-bottom-left-radius: 8px;
+}
+.notme {
+  align-items: flex-start;
+}
+
+.notme .message {
+	color: white;	
+  margin-right: 25%;
+  background-color: #9b3afc;
+  position: relative;
+}
+
+.notme .message:before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  bottom: 0;
+  left: -7px;
+  height: 20px;
+  width: 20px;
+  background-color: #9b3afc;
+  border-bottom-right-radius: 8px;
+}
+.notme .message:after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  left: -10px;
+  width: 10px;
+  height: 20px;
+  background-color: lightgrey;
+  border-bottom-right-radius: 8px;
+}
