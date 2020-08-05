@@ -37,11 +37,11 @@ class Registration extends React.Component{
 		fetch('/api/signup',{
 			method: "POST",
 			headers: {
-				'Content-type' : 'application/json'
+				"Content-type" : "application/json"
 			},
 			body: JSON.stringify(data)
 		})
-		.then((result) => result.json())
+		//.then((result) => result.json())
 		.then((info) => {console.log(info);})
 	}
 	render(){

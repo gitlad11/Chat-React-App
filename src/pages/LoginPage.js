@@ -20,7 +20,7 @@ class LoginPage extends React.Component{
 		return(
 			<div className='LoginPage'>
 			<div className='Page'>
-				<Header/>
+				<Header AuthUser={this.state.AuthUser}/>
 				<UsersInfo friends={this.state.AuthUser.friends} name='Ivan' lastname='Space'/>
 				<Login/>
 				<Sidebar/>
