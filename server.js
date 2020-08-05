@@ -4,7 +4,7 @@ const session = require('express-session')
 const path = require('path')
 const mongoose = require('mongoose')
 const connectmongo = require('connect-mongo')
-const io require('socket.io')
+const io = require('socket.io')
 const http = require('http')
 const cors = require('cors')
 const passport = require('passport')
@@ -24,13 +24,13 @@ var HOST = 'http://localhost'
 var DB_Collection = 'local'
 var DB_PORT = '27017'
 var DB_HOST = `mongodb://localhost`
-var http = http.createServer(app)
-var io = io(http)
+var server = http.createServer(app)
+var socketio = io(server)
 
 //cors for server to let headers 
 //credentials for cookies
 app.use(cors({
-	origin : "http://localhost:3000",
+	origin : `${HOST}:${PORT}`,
 	credentials: true
 }))
 
@@ -114,22 +114,33 @@ app.get('/api/messages', function(req, res){
 	})
 })
 app.post('/api/signup', (req, res, next) =>{
-	bcrypt.hash(req.body.password, 10).then((hash) =>{
+		if(req){
+			console.log(`new request ${req.body.username}`)
+		}
 		const user = new Users({
-			user_name: req.body.user_name,
+			user_name: req.body.username,
+			email : req.body.email,
 			age : req.body.age,
-			password : hash
+			password : req.body.password
 		});
-		user.save().then((response) => {
+		user.save().then((res) => {
+			console.log(`User saved`)
 			res.status(201).json({
 				message: `User successfully created`,
-				result: response
+				result: res
 			});
 		}).catch(error => {
+			console.log(`error : ${error}`)
 			res.status(500).json({
-				error: error
+				error: error,
+				message : error.message
 			})
 		})
 	})
-});
 
+
+app.post('/api/login', (req, res, next) =>{
+	passport.authenticate('local' , { failureRedirect : '/login'},
+		res.send(`Your are loged in!`)
+	)
+})
