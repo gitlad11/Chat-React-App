@@ -12,7 +12,7 @@ const LocalStrategy = require('passport-local').Strategy;
 
 var moment = require('moment');
 var now = moment().format("YYYY : MM : DD");
-
+//connectmongo for store cookies in the particular collection
 var MongoStore = connectmongo(session)
 var Users = require('./models/Users')
 var Messages = require('./models/Messages')
@@ -114,20 +114,18 @@ app.get('/api/messages', function(req, res){
 	})
 })
 app.post('/api/signup', (req, res, next) =>{
-		if(req){
-			console.log(`new request ${req.body.username}`)
-		}
+		console.dir(req.body)
 		const user = new Users({
 			user_name: req.body.username,
 			email : req.body.email,
 			age : req.body.age,
 			password : req.body.password
 		});
-		user.save().then((res) => {
+		user.save().then((response) => {
 			console.log(`User saved`)
 			res.status(201).json({
 				message: `User successfully created`,
-				result: res
+				result: response
 			});
 		}).catch(error => {
 			console.log(`error : ${error}`)
@@ -140,7 +138,13 @@ app.post('/api/signup', (req, res, next) =>{
 
 
 app.post('/api/login', (req, res, next) =>{
-	passport.authenticate('local' , { failureRedirect : '/login'},
-		res.send(`Your are loged in!`)
+	console.dir(req.body)
+	passport.authenticate('local' , (error, user) =>{
+			if(error){
+				res.status(500).send(`You have got error`)
+			} else {
+				res.send(`You have loged in`)
+			}
+		}		
 	)
 })

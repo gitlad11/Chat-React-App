@@ -22,23 +22,30 @@ userSchema.methods.comparePassword = function comparePassword(password, callback
   bcrypt.compare(password, this.password);
 };
 
-userSchema.pre('save', function saveHook(next){
-		var instance = this
-
-	if (!instance.isModified('password')){
+userSchema.pre("save", function(next){
+	if(!this.isModified("password")){
 		return next();
-	return bcrypt.genSalt((error, salt) =>{
-		if(error){
-			return next(error);
-		}
-		return bcrypt.hash(instance.password, salt, (error, hash) =>{
-			if(error){
-				return next(error)
-			}
-			instance.password = hash;
-			return next();
-		})	
-	})	
-}
+	}
+	this.password = bcrypt.hashSync(this.password, 10);
+	next();
 })
+//userSchema.pre('save', function saveHook(next){
+		//var instance = this
+
+	//if (!instance.isModified('password')){
+		//return next();
+	//return bcrypt.genSalt((error, salt) =>{
+		//if(error){
+			//return next(error);
+		//}
+		//return bcrypt.hash(instance.password, salt, (error, hash) =>{
+			//if(error){
+				//return next(error)
+			//}
+			//instance.password = hash;
+			//return next();
+		//})	
+	//})	
+//}
+//})
 module.exports = mongoose.model('Users', userSchema)

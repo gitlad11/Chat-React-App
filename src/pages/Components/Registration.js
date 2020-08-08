@@ -5,9 +5,7 @@ import {Link} from 'react-router-dom';
 class Registration extends React.Component{
 	constructor(props){
 		super(props);
-		this.state = {username:'',age:'',password:''}
-
-		this.state = {hidden: true};
+		this.state = {username:'',age:'',password:'', hidden:true}
 
 		this.nameChange = this.nameChange.bind(this)
 		this.passwordChange = this.passwordChange.bind(this)
@@ -32,6 +30,7 @@ class Registration extends React.Component{
     this.setState({ hidden: !this.state.hidden });
   	}
 	onSubmit(event){
+		delete this.state.hidden
 		const data = this.state
 		event.preventDefault();
 		fetch('/api/signup',{
