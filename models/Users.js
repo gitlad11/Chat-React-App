@@ -13,7 +13,7 @@ var userSchema = new Schema({
 		type: Number, required: false
 	},
 	dialogs : [],
-
+	friends : [],
 	password: {
 		type:String, required: true, maxLength: 40, minLength:6
 	},

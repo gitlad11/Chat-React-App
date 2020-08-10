@@ -11,7 +11,8 @@ class LoginPage extends React.Component{
 	constructor(props){
 		super(props)
 		this.state = {
-			AuthUser : {name : 'Ivan', email : 'efimovi420@gmail.com', friends : []}, 
+			credentials : {username : '', password : ''},
+			AuthUser : {username : '', email: '', friends: [], dialogs : []}, 
 			isOnline : false,
 			notification : false,
 			}

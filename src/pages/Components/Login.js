@@ -38,8 +38,15 @@ class Login extends React.Component{
 			body : JSON.stringify(data)
 		})
 		//.then((result) => result.json())
-		.then((info) => {console.log(info);})
-	}
+		.then((res) =>{ if(!res){
+						console.log('no response')
+					} else {
+						console.log(res)
+					}
+			})
+		.catch(error => { console.log('the error is occured')})
+		}
+		
 	render(){
 		return(
 			<div className='login-form'>
