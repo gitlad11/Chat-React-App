@@ -34,7 +34,7 @@ function Header(props){
 				</div>
 			<Link to='/profile'><div className='User-card d-flex'>
 				<div className='User-avatar'><img src={UserAvatar} className='User-image'/><div className=' User-settings' ><img src={UserSettings}/></div></div>
-				<div className='User-name'><p>{props.AuthUser.name}</p><p className='text-muted'>{props.AuthUser.email}</p></div>
+				<div className='User-name'><p>{props.AuthUser.username}</p><p className='text-muted'>{props.AuthUser.email}</p></div>
 			</div>
 			</Link>
 		</div>

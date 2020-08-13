@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import DialogsPage from './pages/DialogsPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage'
 import RoomsPage from './pages/RoomsPage'
 import ProfilePage from './pages/ProfilePage'
+import AuthContext from './AuthContext'
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -12,17 +13,37 @@ import { Switch, Route } from 'react-router-dom';
 class App extends React.Component{
 	constructor(props){
 		super(props)
-		this.state = {users : []}
+		this.state = {users : [], AuthUser : undefined , token : undefined}
 	}
-	componentWillMount(){
-		fetch('/api/users')
+
+	componentDidMount(){
+		fetch('/users')
 		.then(result => this.setState({users: result}))
 		.catch(error => console.log(error));
 		}
-
+	useEffect(() =>{
+		const checkLoggedIn = async () =>{
+			var token = localStorage.getItem("auth-token")
+			if (token === null){
+				localStorage.setItem("auth-token", "");
+				token = ""
+			}
+			const TokenValid = await Axios.post(
+				"/tokenValid", null, { headers : {"x-auth-token" : token}}
+				);
+			if (tokenValid.data){
+				var GetUser = await Axios.get("/users", {headers : {"x-auth-token" : token}})
+			}
+			const setUser = this.setState()
+			setUser({ AuthUser : GetUser.data, token : token })
+		}
+		checkLoggedIn();
+	}, [])
 	render(){
 		return (
+			var AuthUser = this.state.AuthUser
 			<div className='App'>
+			<AuthContext.Provider value={{ AuthUser, setUser }}>
 				<Switch>
 					<Route exact path='/' component={DialogsPage}/>
 					<Route exact path='/login' component={LoginPage}/>
@@ -30,6 +51,7 @@ class App extends React.Component{
 					<Route path='/rooms' component={RoomsPage}/>
 					<Route path='/profile' component={ProfilePage}/>
 				</Switch>
+			</AuthContext.Provider>	
 			</div>
 		)
 	}

@@ -12,8 +12,8 @@ const cors = require('cors')
 
 
 //const LocalStrategy = require('passport-local').Strategy;
-var JwT = require('jsonwebtoken')
-
+var jwt = require('jsonwebtoken')
+var authenticate = require('./Authenticate')
 var config = require('./config.json')
 var moment = require('moment');
 var now = moment().format("YYYY : MM : DD");
@@ -130,29 +130,25 @@ mongoose.connect(`${DB_HOST}:${DB_PORT}/${DB_Collection}`, { useNewUrlParser: tr
 		console.log(`server is running on ${HOST}:${PORT}`)
 	})
 })
+
+
 //routes and views for api
-app.get('/api/users', function(req, res){
+app.get('/users', function(req, res){
 	Users.find({}).exec()
 	.then(function(document){
 	var data =  JSON.stringify(document)
 		res.send(data)
 	})
 })
-app.get('/api/user', (req, res) =>{
+app.get('/user', (req, res) =>{
 	Users.findOne({_id : req._id}).exec()
 	.then((user) =>{
 		var data = JSON.stringify(user)
 		res.send(data)
 	})
 })
-app.get('/api/messages', function(req, res){
-	Messages.find({}).exec()
-	.then(function(document){
-	var data = JSON.stringify(document)
-		res.send(data)
-	})
-})
-app.post('/api/signup', (req, res, next) =>{
+
+app.post('/signup', (req, res, next) =>{
 		console.dir(req.body)
 		const user = new Users({
 			user_name: req.body.username,
@@ -160,42 +156,62 @@ app.post('/api/signup', (req, res, next) =>{
 			age : req.body.age,
 			password : req.body.password
 		});
-		user.save().then((response) => {
+		user.save().then((user) => {
 			console.log(`User saved`)
-			res.status(201).json({
-				message: `User successfully created`,
-				result: response
-			});
+			return res.send({success: true, message : 'You has been registered' , data : user});
 		}).catch(error => {
-			console.log(`error : ${error}`)
-			res.status(500).json({
-				error: error,
-				message : error.message
-			})
+			console.log(`error : ${error.message}`)
+			return res.send({error: error,message : error.message})
 		})
 	})
 
-//findOne is not working
-app.post('/api/login', (req, res, next) =>{
+//if user exists and password matchs send token with user(claim) to react app
+app.post('/login', (req, res, next) =>{
+	if(req.body.username){
 	console.dir(req.body)
-	Users.findOne({user_name : req.body.username}).exec()
+	Users.findOne({user_name : req.body.username})
 		.then((user) =>{
 		if(!user){
 			console.log(`no found user`)
-			res.send({success: false, message : 'authentication failed, User is not found'})
+			return res.send({success: false, message : 'пользователя с таким именем нет'})
 		} else if(!user.comparePassword(req.body.password)){
 			console.log(`comparePassword is failed`)
-			res.send({success : false, message : `wrong password`})	
+			return res.send({success : false, message : `Неправельный пароль`})	
 		} else {
-			var token = jwt.sign(user, config.secret, {
+			var token = jwt.sign({ id : user._id}, config.secret, {
 				expiresIn : 1000000
 			})
-			res.send({success : true, jwtToken : "JWT"+token})
+			return res.send({success : true, token, user})
 		} 
 	})
+	}	
 })
+//check if User from client side have valid token
+app.post('/tokenValid', async (req, res) =>{
+	try {
+		var token = req.headers("x-auth-token");
+		if(!token){ return res.json(false)}
 
-app.post('/api/messages', (req, res, next) =>{
+	const verify = jwt.verify(token, config.secret);
+	if(!verified){ return res.json(false) }
+
+	const user = await Users.findById(verified.id);
+	if(!user){ return res.json(false) }
+
+	return res.json(true)
+} catch (error) {
+	res.status(500).json({error : error.message})
+	}
+})
+//access to message only for token
+app.get('/messages', authenticate, function(req, res){
+	Messages.find({}).exec()
+	.then(function(document){
+	var data = JSON.stringify(document)
+		res.send(data)
+	})
+})
+app.post('/messages', authenticate, (req, res, next) =>{
 	if(req.body.message){
 		const message = new Messages({
 			sender : req.body.user,
@@ -203,6 +219,15 @@ app.post('/api/messages', (req, res, next) =>{
 			text : req.body.message,
 			sent_date : now(),
 		})
+	}
+})
+app.delete('/delete', auth, (req, res) =>{
+	try { 
+		Users.findByIdAndDelete(req.user).then((user) =>{
+			res.json({message : `Пользователь был удален : ${user}`})
+		})
+	} catch (error) {
+		res.status(500).json({error : error.message})
 	}
 })
 

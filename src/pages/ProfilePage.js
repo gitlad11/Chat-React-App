@@ -9,7 +9,7 @@ export default class ProfilePage extends React.Component{
 	constructor(props){
 		super(props)
 		this.state = {
-			AuthUser : {name : 'Ivan', email : 'efimovi420@gmail.com', friends : [], dialog: []}, 
+			AuthUser : {username : 'Ivan', email : 'efimovi420@gmail.com', friends : [], dialog: []}, 
 			isOnline : false,
 			notification : false,
 			}

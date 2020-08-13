@@ -11,7 +11,7 @@ class RegisterPage extends React.Component{
 	constructor(props){
 		super(props)
 		this.state = {
-			AuthUser : {name : 'Ivan', email : 'efimovi420@gmail.com', friends : []}, 
+			AuthUser : {username : 'Ivan', email : 'efimovi420@gmail.com', friends : []}, 
 			isOnline : false,
 			notification : false,
 			}

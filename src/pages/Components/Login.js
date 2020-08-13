@@ -1,6 +1,8 @@
 import React, {useEffect , useState} from 'react'
 import './Login.css'
 import {Link} from 'react-router-dom'
+import Axios from "axios"
+import AuthContext from '../../AuthContext'
 
 class Login extends React.Component{
 	constructor(props){
@@ -27,26 +29,21 @@ class Login extends React.Component{
     this.setState({ hidden: !this.state.hidden });
   	}
 	onSubmit(event){
+		event.preventDefault()
 		delete this.state.hidden
 		const data = this.state
 		
-		fetch('/api/login', {
+		fetch('/login', {
 			method : "POST",
 			headers : {
 				"Content-type": "application/json" 
 			},
 			body : JSON.stringify(data)
 		})
-		//.then((result) => result.json())
-		.then((res) =>{ if(!res){
-						console.log('no response')
-					} else {
-						console.log(res)
-					}
-			})
-		.catch(error => { console.log('the error is occured')})
-		}
-		
+		.then(response => response.json())
+		.then(result => console.log(result))
+		.catch(error => console.log(error))
+	}	
 	render(){
 		return(
 			<div className='login-form'>

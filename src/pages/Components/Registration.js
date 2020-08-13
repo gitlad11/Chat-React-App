@@ -33,7 +33,7 @@ class Registration extends React.Component{
 		delete this.state.hidden
 		const data = this.state
 		event.preventDefault();
-		fetch('/api/signup',{
+		fetch('/signup',{
 			method: "POST",
 			headers: {
 				"Content-type" : "application/json"
@@ -41,7 +41,9 @@ class Registration extends React.Component{
 			body: JSON.stringify(data)
 		})
 		//.then((result) => result.json())
-		.then((info) => {console.log(info);})
+		.then(response => response.json())
+		.then(result => console.log(result))
+		.catch(error => console.log(error))
 	}
 	render(){
 		return (
