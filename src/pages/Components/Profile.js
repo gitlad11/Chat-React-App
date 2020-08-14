@@ -1,15 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './Profile.css';
+
+import AuthContext from '../../AuthContext'
 import ProfileIcon from './Images/icons8-male-user.png';
 import UpdateIcon from './Images/icons8-редактировать.png';
 import CloseIcon from './Images/icons8-close.png';
 
 function Profile(props){
 	var [open, setOpen] = useState(false)
+	var { AuthUser, setAuthUser } = useContext(AuthContext)
 
 	const setOn = () => setOpen(true);
 	const setOff = () => setOpen(false);
 
+	const logout = () => {
+		setAuthUser({
+			token : undefined,
+			AuthUser : undefined,
+
+		})
+		localStorage.setItem("auth-token", "")
+	}
+	
 	return(
 		<div className='Profile'>
 			<div className='Profile-Image'><img src={ProfileIcon}/></div>

@@ -1,8 +1,10 @@
-import React, {useEffect , useState} from 'react'
+import React, {useEffect , useState, useContext } from 'react'
+import { useHistory } from "react-router-dom"
+import AuthContext from '../../AuthContext'
 import './Login.css'
 import {Link} from 'react-router-dom'
 import Axios from "axios"
-import AuthContext from '../../AuthContext'
+
 
 class Login extends React.Component{
 	constructor(props){
@@ -32,7 +34,9 @@ class Login extends React.Component{
 		event.preventDefault()
 		delete this.state.hidden
 		const data = this.state
-		
+		const history = useHistory();
+		const { setAuthUser } = useContext(AuthContext)
+
 		fetch('/login', {
 			method : "POST",
 			headers : {
@@ -41,7 +45,11 @@ class Login extends React.Component{
 			body : JSON.stringify(data)
 		})
 		.then(response => response.json())
-		.then(result => console.log(result))
+		.then(response => console.log(response))
+		//.then(response => setAuthUser({ 
+			//token : response.data.token,
+			//AuthUser : response.data.user 
+		//}))
 		.catch(error => console.log(error))
 	}	
 	render(){
