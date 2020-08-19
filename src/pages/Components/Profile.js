@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import './Profile.css';
-
+import { Redirect } from 'react-router-dom'
 import AuthContext from '../../AuthContext'
 import ProfileIcon from './Images/icons8-male-user.png';
 import UpdateIcon from './Images/icons8-редактировать.png';
@@ -21,12 +21,16 @@ function Profile(props){
 		})
 		localStorage.setItem("auth-token", "")
 	}
-	
+	if(!AuthUser){
+		return(
+			<Redirect to='login/'/>
+			)
+	}
 	return(
 		<div className='Profile'>
 			<div className='Profile-Image'><img src={ProfileIcon}/></div>
 			<div className='Profile-Update'>
-			<div className='Profile-Name'><h5>Name Lastname</h5><p className=''>Email420@gmail.com</p></div>
+			<div className='Profile-Name'><h5>{AuthUser.username}</h5><p className=''>{AuthUser.email}</p></div>
 			<button onClick={setOn}  className='btn update-button'><img src={UpdateIcon}/></button>
 			<form className={open === true ? "Update-form-Active" : "Update-form"}>
 				<input placeholder='Изменить Имя' className='name-input'/>

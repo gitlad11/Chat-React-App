@@ -1,0 +1,65 @@
+.PeopleMenu{
+	margin-top: 50px !important;
+	position: relative;
+	height: 600px;
+	width: 60%;
+	margin: auto;
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+	border: 2px ease grey;
+}
+.PeopleBar{
+	display: flex;
+	height: 60px;
+	background-color: purple;
+	position: relative;
+	border-top: 1px solid grey;
+	border-bottom: 2px solid grey;
+}
+.PeopleBar input{
+	top:15%;
+	left: 15px;
+	width: 80%;
+	position: absolute;
+	border-radius: 10px;
+	height: 40px;
+	border: none;
+	border-right: 1px solid grey;
+	border-bottom: 1px solid black;
+}
+.PeopleList{
+	height: 540px;
+	width: 100%;
+	background-color: lightgrey;
+	padding: 10px;
+	overflow-y: scroll;
+}
+.People-search-btn{
+	position: absolute;
+	right: 15px; 	
+	top: 15%;
+	max-height: 40px;
+	width: 100px;
+	border-radius: 10px;
+	border: none;
+	border-bottom: 1px solid black;
+	border-left: 1px solid grey;
+	background-color: lime;
+}
+.People-Item{
+	display: flex;
+	align-content: center;
+	border-bottom: 1px solid grey;
+	box-shadow: 0 8px 8px rgba(0,0,0,0.4);
+	height: 80px;
+	width: 100%;
+}
+.People-Info{
+	text-align: center;
+	align-content: center;
+	width: 100%;
+}
+.People-Avatar{
+	height: 100%;
+	width: 80px;
+	border: 1px solid grey;
+}

@@ -10,19 +10,13 @@ import './Backgrounds.css';
 class LoginPage extends React.Component{
 	constructor(props){
 		super(props)
-		this.state = {
-			credentials : {username : '', password : ''},
-			AuthUser : {username : '', email: '', friends: [], dialogs : []}, 
-			isOnline : false,
-			notification : false,
-			}
 	}
 	render(){
 		return(
 			<div className='LoginPage'>
 			<div className='Page'>
-				<Header AuthUser={this.state.AuthUser}/>
-				<UsersInfo friends={this.state.AuthUser.friends} name='Ivan' lastname='Space'/>
+				<Header/>
+				<UsersInfo/>
 				<Login/>
 				<Sidebar/>
 			</div>

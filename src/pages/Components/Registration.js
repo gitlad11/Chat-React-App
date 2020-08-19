@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import './Login.css'
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 
 class Registration extends React.Component{
 	constructor(props){
 		super(props);
-		this.state = {username:'',age:'',password:'', hidden:true}
+		this.state = {username:'',age:'',password:'', hidden:true, result : '', success: false}
 
 		this.nameChange = this.nameChange.bind(this)
 		this.passwordChange = this.passwordChange.bind(this)
@@ -31,6 +31,9 @@ class Registration extends React.Component{
   	}
 	onSubmit(event){
 		delete this.state.hidden
+		delete this.state.result
+		delete this.state.success
+
 		const data = this.state
 		event.preventDefault();
 		fetch('/signup',{
@@ -42,10 +45,14 @@ class Registration extends React.Component{
 		})
 		//.then((result) => result.json())
 		.then(response => response.json())
-		.then(result => console.log(result))
-		.catch(error => console.log(error))
+		.then(result => this.setState({result : result.message, success: result.success}))
+		.catch(error => alert(error))
 	}
 	render(){
+		if(this.state.success == true)
+			return (
+				<Redirect to='login/'/>
+				)
 		return (
 		<div className='login-form'>
 			<form  onSubmit={this.onSubmit} method='post'>

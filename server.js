@@ -36,7 +36,7 @@ var socketio = io(server)
 				//cors for server to let headers 
 				//credentials for cookies
 app.use(cors({
-	origin : `${HOST}:${PORT}`,
+	origin : `${HOST}:3000`,
 	credentials: true
 }))
 
@@ -134,6 +134,9 @@ mongoose.connect(`${DB_HOST}:${DB_PORT}/${DB_Collection}`, { useNewUrlParser: tr
 
 //routes and views for api
 app.get('/users', function(req, res){
+	if(req){
+		console.dir('sending users')
+	}
 	Users.find({}).exec()
 	.then(function(document){
 	var data =  JSON.stringify(document)
@@ -161,7 +164,7 @@ app.post('/signup', (req, res, next) =>{
 			return res.send({success: true, message : 'You has been registered' , data : user});
 		}).catch(error => {
 			console.log(`error : ${error.message}`)
-			return res.send({error: error,message : error.message})
+			return res.send({success: false, message : error.message})
 		})
 	})
 
@@ -176,7 +179,7 @@ app.post('/login', (req, res, next) =>{
 			return res.send({success: false, message : 'пользователя с таким именем нет'})
 		} else if(!user.comparePassword(req.body.password)){
 			console.log(`comparePassword is failed`)
-			return res.send({success : false, message : `Неправельный пароль`})	
+			return res.send({success : false, message : `Неправильный пароль`})	
 		} else {
 			var token = jwt.sign({ id : user._id}, config.secret, {
 				expiresIn : 1000000
@@ -188,9 +191,12 @@ app.post('/login', (req, res, next) =>{
 })
 //check if User from client side have valid token
 app.post('/tokenValid', async (req, res) =>{
+	if(req){
+		console.dir(req.headers)
+	}
 	try {
 		var token = req.headers("x-auth-token");
-		if(!token){ return res.json(false)}
+		if(!token){ return res.json({ message : `you dont have token`})}
 
 	const verify = jwt.verify(token, config.secret);
 	if(!verified){ return res.json(false) }
@@ -221,7 +227,7 @@ app.post('/messages', authenticate, (req, res, next) =>{
 		})
 	}
 })
-app.delete('/delete', auth, (req, res) =>{
+app.delete('/delete', authenticate, (req, res) =>{
 	try { 
 		Users.findByIdAndDelete(req.user).then((user) =>{
 			res.json({message : `Пользователь был удален : ${user}`})

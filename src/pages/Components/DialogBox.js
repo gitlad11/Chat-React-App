@@ -1,21 +1,30 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './DialogBox.css'
+import { Redirect } from 'react-router-dom'
+import AuthContext from '../../AuthContext'
 
 function DialogBox(){
+  var { AuthUser, setAuthUser } = useContext(AuthContext)
+
+  if(!AuthUser){
+    return (
+      <Redirect to='login/'/>
+      )
+  }
 	return(
 			<div className='Dialog-Box'>
 				<div className='Dialog'>
-					<div class="isme messages">
-    					<div class="message">
+					<div className="isme messages">
+    					<div className="message">
       						сдесь будут сообщения от меня.хочу сделать фунцию что бы менять цвет сообщения
      					</div>
      						<p>11.22.2020</p>
-     					<div class="message">
+     					<div className="message">
       						сдесь будут сообщения от меня.хочу сделать фунцию что бы менять цвет сообщения
      					</div>
      					</div>
-     					 <div class="notme messages">
-    						<div class="message ">
+     					 <div className="notme messages">
+    						<div className="message ">
      						 Hey!
    						 </div>
   						</div>

@@ -10,19 +10,14 @@ import NewFeature from './Components/NewFeature'
 class RoomsPage extends React.Component{
 	constructor(props){
 		super(props)
-		this.state = {
-			AuthUser : {username : 'Ivan', email : 'efimovi420@gmail.com', friends : []}, 
-			isOnline : false,
-			notification : false,
-			}
 	}
 	render(){
 		return(
 			<div className='RoomsPage'>
 			<div className='Page'>
-				<Header AuthUser={this.state.AuthUser}/>
-				<UsersInfo friends={this.state.AuthUser.friends} name='Ivan' lastname='Space' isOnline={this.state.isOnline}/>
-				<Sidebar notification={this.state.notification}/>
+				<Header/>
+				<UsersInfo/>
+				<Sidebar/>
 				<NewFeature/>
 			</div>
 				<Footer/>	

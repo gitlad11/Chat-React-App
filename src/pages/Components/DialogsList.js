@@ -1,7 +1,10 @@
-import React , {useState} from 'react'
+import React , {useState, useContext } from 'react'
 import './DialogsList.css';
 import DialogAvatar from './Images/icons8-male-user.png'
-function DialogsList(props){	
+import AuthContext from '../../AuthContext'
+
+function DialogsList(props){
+		var { AuthUser, setAuthUser } = useContext(AuthContext)	
 		return(
 			<div className='DialogsList'>
 				<div className='Dialog-item'><img src={DialogAvatar} className='Dialog-Avatar'/><b>Vasiliy Vovasov</b></div>

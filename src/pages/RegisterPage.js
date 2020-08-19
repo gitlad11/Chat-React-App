@@ -10,20 +10,16 @@ import './Backgrounds.css';
 class RegisterPage extends React.Component{
 	constructor(props){
 		super(props)
-		this.state = {
-			AuthUser : {username : 'Ivan', email : 'efimovi420@gmail.com', friends : []}, 
-			isOnline : false,
-			notification : false,
-			}
+		
 	}
 	render(){
 		return(
 			<div className='LoginPage'>
 			<div className='Page'>
-				<Header AuthUser={this.state.AuthUser}/>
-				<UsersInfo friends={this.state.AuthUser.friends} name='Ivan' lastname='Space' isOnline={this.state.isOnline}/>
+				<Header/>
+				<UsersInfo/>
 				<Registration/>
-				<Sidebar notification={this.state.notification}/>
+				<Sidebar/>
 			</div>
 				<Footer/>
 			</div>

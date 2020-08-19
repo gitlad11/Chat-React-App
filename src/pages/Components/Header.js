@@ -1,12 +1,15 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import './Header.css';
 import {Link} from 'react-router-dom';
 
 import UserAvatar from './Images/icons8-male-user.png';
 import UserSettings from './Images/icons8-редактировать.png';
+import AuthContext from '../../AuthContext'
 
 function Header(props){
-	if(props.AuthUser.username == 0){
+	const {AuthUser, setAuthUser} = useContext(AuthContext)
+
+	if(!AuthUser){
 		return (
 		<div className='container-fluid header nav nav-navbar'>
 				<div className='Logo'><h5>LogoType</h5></div>
@@ -34,7 +37,7 @@ function Header(props){
 				</div>
 			<Link to='/profile'><div className='User-card d-flex'>
 				<div className='User-avatar'><img src={UserAvatar} className='User-image'/><div className=' User-settings' ><img src={UserSettings}/></div></div>
-				<div className='User-name'><p>{props.AuthUser.username}</p><p className='text-muted'>{props.AuthUser.email}</p></div>
+				<div className='User-name'><p>{AuthUser.username}</p><p className='text-muted'>{AuthUser.email}</p></div>
 			</div>
 			</Link>
 		</div>

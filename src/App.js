@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import DialogsPage from './pages/DialogsPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage'
@@ -12,13 +12,11 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Switch, Route } from 'react-router-dom';
 
-class App extends React.Component{
-	constructor(props){
-		super(props)
-		this.state = { AuthUser : undefined , token : undefined}
-	}
+function App(){
+	const [AuthUser, setAuthUser] = useState()
+	const [token , setToken ] = useState()
 
-	componentWillMount(){
+	useEffect(() =>{
 		const checkLoggedIn = async () =>{
 			var token = localStorage.getItem("auth-token")
 			if (token === null){
@@ -30,32 +28,14 @@ class App extends React.Component{
 				);
 			if (TokenValid.data){
 				var GetUser = await Axios.get("/users", {headers : {"x-auth-token" : token}})
-			}		
-			this.setState({ AuthUser : GetUser.data, token : token })
-		}
+			}
+			
+			setAuthUser({ username : GetUser.data.username, email : GetUser.data.email, token : GetUser.token})
+
 		checkLoggedIn();
-		}
-	//useEffect(() =>{
-		//const checkLoggedIn = async () =>{
-			//var token = localStorage.getItem("auth-token")
-			//if (token === null){
-				//localStorage.setItem("auth-token", "");
-				//token = ""
-			//}
-			//const TokenValid = await Axios.post(
-				//"/tokenValid", null, { headers : {"x-auth-token" : token}}
-				//);
-			//if (tokenValid.data){
-				//var GetUser = await Axios.get("/users", {headers : {"x-auth-token" : token}})
-			//}
-			//const setUser = this.setState()
-			//setUser({ AuthUser : GetUser.data, token : token })
-		//}
-		//checkLoggedIn();
-	//}, [])
-	render(){
-		var setAuthUser = this.setState()
-		var AuthUser = this.state.AuthUser
+		}	
+	},[])
+		
 		return (
 			<div className='App'>
 			<AuthContext.Provider value={{ AuthUser, setAuthUser }}>
@@ -70,5 +50,4 @@ class App extends React.Component{
 			</div>
 		)
 	}
-}
 export default App;
